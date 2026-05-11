@@ -5,6 +5,9 @@ seaborn
 plotly
 streamlit
 scikit-learn
+openpyxl
+Pillow
+requests
 
 
 
