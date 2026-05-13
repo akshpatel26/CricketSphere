@@ -1016,34 +1016,46 @@ elif page == "👤 Player Analysis":
     with tab2:
         st.markdown("### Top 10 Bowlers (All Time)")
         real_top_bowl = pd.DataFrame([
-            {"player": "Yuzvendra Chahal",    "matches": 182, "wickets": 228, "bowling_average": 23.13, "economy_rate": 8.03, "4w": 8, "5w": 1},
-            {"player": "Bhuvneshwar Kumar",   "matches": 199, "wickets": 215, "bowling_average": 20.00, "economy_rate": 7.72, "4w": 10, "5w": 2},
-            {"player": "Sunil Narine",        "matches": 196, "wickets": 199, "bowling_average": 22.09, "economy_rate": 6.80, "4w": 7, "5w": 1},
-            {"player": "Piyush Chawla",       "matches": 192, "wickets": 192, "bowling_average": 26.60, "economy_rate": 7.96, "4w": 2, "5w": 0},
-            {"player": "Ravichandran Ashwin", "matches": 221, "wickets": 187, "bowling_average": 29.80, "economy_rate": 7.20, "4w": 1, "5w": 0},
-            {"player": "Jasprit Bumrah",      "matches": 153, "wickets": 185, "bowling_average": 22.02, "economy_rate": 7.30, "4w": 2, "5w": 2},
-            {"player": "Dwayne Bravo",        "matches": 161, "wickets": 183, "bowling_average": 23.83, "economy_rate": 8.39, "4w": 2, "5w": 0},
-            {"player": "Ravindra Jadeja",     "matches": 264, "wickets": 176, "bowling_average": 30.20, "economy_rate": 7.60, "4w": 4, "5w": 1},
-            {"player": "Amit Mishra",         "matches": 162, "wickets": 174, "bowling_average": 23.90, "economy_rate": 7.37, "4w": 4, "5w": 1},
-            {"player": "Lasith Malinga",      "matches": 122, "wickets": 170, "bowling_average": 19.79, "economy_rate": 7.14, "4w": 6, "5w": 1},
-        ])
-        fig = px.bar(real_top_bowl, x="player", y="wickets",
-                     color="economy_rate", color_continuous_scale="Blues_r",
-                     hover_data=["matches", "bowling_average", "4w", "5w"],
-                     labels={"wickets":"Wickets","player":"Player", "economy_rate": "Economy"})
+    {"player": "YS Chahal", "span": "2013-2026", "matches": 185, "innings": 181, "balls": 3971, "overs": 661.5, "maidens": 4, "runs": 5318, "wickets": 229, "bbi": "5/40", "average": 23.22, "economy": 8.03, "sr": 17.34, "four_w": 8, "five_w": 1},
+    {"player": "B Kumar", "span": "2011-2026", "matches": 201, "innings": 201, "balls": 4480, "overs": 746.4, "maidens": 14, "runs": 5733, "wickets": 219, "bbi": "5/19", "average": 26.17, "economy": 7.67, "sr": 20.45, "four_w": 3, "five_w": 2},
+    {"player": "SP Narine", "span": "2012-2026", "matches": 198, "innings": 196, "balls": 4555, "overs": 759.1, "maidens": 3, "runs": 5150, "wickets": 202, "bbi": "5/19", "average": 25.49, "economy": 6.78, "sr": 22.54, "four_w": 7, "five_w": 1},
+    {"player": "PP Chawla", "span": "2008-2024", "matches": 192, "innings": 191, "balls": 3850, "overs": 641.4, "maidens": 2, "runs": 5108, "wickets": 192, "bbi": "4/17", "average": 26.60, "economy": 7.96, "sr": 20.05, "four_w": 2, "five_w": 0},
+    {"player": "R Ashwin", "span": "2009-2025", "matches": 221, "innings": 217, "balls": 4710, "overs": 785.0, "maidens": 4, "runs": 5652, "wickets": 187, "bbi": "4/34", "average": 30.22, "economy": 7.20, "sr": 25.18, "four_w": 1, "five_w": 0},
+    {"player": "JJ Bumrah", "span": "2013-2026", "matches": 156, "innings": 156, "balls": 3583, "overs": 597.1, "maidens": 8, "runs": 4380, "wickets": 186, "bbi": "5/10", "average": 23.54, "economy": 7.33, "sr": 19.26, "four_w": 3, "five_w": 2},
+    {"player": "DJ Bravo", "span": "2008-2022", "matches": 161, "innings": 158, "balls": 3119, "overs": 519.5, "maidens": 3, "runs": 4360, "wickets": 183, "bbi": "4/22", "average": 23.82, "economy": 8.38, "sr": 17.04, "four_w": 2, "five_w": 0},
+    {"player": "RA Jadeja", "span": "2008-2026", "matches": 265, "innings": 234, "balls": 4212, "overs": 702.0, "maidens": 2, "runs": 5392, "wickets": 178, "bbi": "5/16", "average": 30.29, "economy": 7.68, "sr": 23.66, "four_w": 3, "five_w": 1},
+    {"player": "Rashid Khan", "span": "2017-2026", "matches": 148, "innings": 148, "balls": 3440, "overs": 573.2, "maidens": 4, "runs": 4108, "wickets": 174, "bbi": "4/24", "average": 23.60, "economy": 7.16, "sr": 19.77, "four_w": 3, "five_w": 0},
+    {"player": "A Mishra", "span": "2008-2024", "matches": 162, "innings": 162, "balls": 3371, "overs": 561.5, "maidens": 6, "runs": 4145, "wickets": 174, "bbi": "5/17", "average": 23.82, "economy": 7.37, "sr": 19.37, "four_w": 4, "five_w": 1},
+    {"player": "SL Malinga", "span": "2009-2019", "matches": 122, "innings": 122, "balls": 2827, "overs": 471.1, "maidens": 8, "runs": 3365, "wickets": 170, "bbi": "5/13", "average": 19.79, "economy": 7.14, "sr": 16.62, "four_w": 6, "five_w": 1},])
+        fig = px.bar(
+    real_top_bowl,
+    x="player",
+    y="wickets",
+    color="economy",
+    hover_data=["matches", "innings", "average", "sr", "four_w", "five_w"],
+    labels={"wickets": "Wickets", "player": "Player", "economy": "Economy"}
+)
         dark_fig(fig)
         st.plotly_chart(fig, use_container_width=True)
 
         st.markdown("### Bowler Deep-Dive")
-        sel_bowl = st.selectbox("Select Bowler", real_top_bowl["player"].tolist())
-        row = real_top_bowl[real_top_bowl["player"]==sel_bowl].iloc[0]
-        c1,c2,c3,c4 = st.columns(4)
-        c1.metric("Wickets",        int(row["wickets"]))
-        c2.metric("Economy Rate",   row["economy_rate"])
-        c3.metric("Bowling Avg",    row["bowling_average"])
-        c4.metric("4W / 5W",        f"{int(row['4w'])} / {int(row['5w'])}")
 
-
+        sel_bowl = st.selectbox("Select Bowler", real_top_bowl["player"])
+        
+        row = real_top_bowl[real_top_bowl["player"] == sel_bowl].iloc[0]
+        
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Wickets", row["wickets"])
+        c2.metric("Economy", row["economy"])
+        c3.metric("Average", row["average"])
+        c4.metric("Strike Rate", row["sr"])
+        
+        c5, c6, c7, c8 = st.columns(4)
+        c5.metric("Matches", row["matches"])
+        c6.metric("Innings", row["innings"])
+        c7.metric("Best Bowling", row["bbi"])
+        c8.metric("4W / 5W", f"{row['four_w']} / {row['five_w']}")
+        
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 4 – TOURNAMENT INSIGHTS
 # ══════════════════════════════════════════════════════════════════════════════
