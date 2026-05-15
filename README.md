@@ -1,24 +1,23 @@
 # 🏏 IPL Data Analysis Dashboard & Match Predictor
 
----
 
-## 📌 Overview
+### 📌 Overview
 
 This project is a comprehensive IPL (Indian Premier League) analytics system that provides in-depth insights into teams, players, and tournament performance from **2008 to 2025**.
 It also includes a machine learning-based **Match Win Predictor** that forecasts match outcomes using historical data.
 
----
+
 
 ## 🚀 Key Features
 
-### 🔹 Overview Dashboard
+### (a) Overview Dashboard
 
 * Total matches, seasons, teams
 * Total runs, wickets, sixes, fours
 * Highest & lowest team scores
 * Season-wise trends and team success comparison
 
-### 🔹 Team Analysis
+### (b) Team Analysis
 
 * Matches played, wins, losses, win %
 * Season-wise performance
@@ -26,7 +25,7 @@ It also includes a machine learning-based **Match Win Predictor** that forecasts
 * Head-to-head comparison
 * Rivalry insights
 
-### 🔹 Player Analysis
+### (C) Player Analysis
 
 #### 🟢 Batsmen
 
@@ -40,17 +39,16 @@ It also includes a machine learning-based **Match Win Predictor** that forecasts
 * Stats: economy, bowling average, 4W/5W hauls
 * Individual performance analysis
 
----
 
-### 🔹 Tournament Insights
+
+### (d) Tournament Insights
 
 * Year-wise points table (NRR, points, wins)
 * Venue analysis (avg score, batting friendliness)
 * Season winners, Orange Cap & Purple Cap holders
 
----
 
-## 🤖 Match Win Predictor
+### (e) Match Win Predictor
 
 A machine learning model that predicts match outcomes based on match conditions.
 
@@ -75,7 +73,7 @@ A machine learning model that predicts match outcomes based on match conditions.
 * Toss decisions significantly impact match outcomes
 * Context-based features outperform overall team statistics
 
----
+
 
 ## 📁 Project Structure
 
@@ -98,7 +96,7 @@ IPL-Data-Analysis/
 
 ---
 
-## 🛠️ Tech Stack
+### 🛠️ Tech Stack
 
 * Python
 * Pandas, NumPy
@@ -109,15 +107,15 @@ IPL-Data-Analysis/
 
 ---
 
-## 📊 Results & Performance
+### 📊 Results & Performance
 
 * Achieved strong predictive performance with balanced evaluation metrics
 * Model shows consistent results across both teams (no bias)
 * Feature importance highlights the significance of venue and match conditions
 
+---
 
-
-## 🔮 Future Improvements
+### 🔮 Future Improvements
 
 * Real-time IPL data integration
 * Advanced explainability (SHAP)
@@ -126,6 +124,6 @@ IPL-Data-Analysis/
 
 ---
 
-## 🎯 Conclusion
+### 🎯 Conclusion
 
 This project combines **data analysis, visualization, and machine learning** to deliver a complete IPL analytics platform with both insights and predictive capabilities.
