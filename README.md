@@ -1,9 +1,5 @@
 # 🏏 IPL Data Analysis Dashboard & Match Predictor
 
-## 🔗 Live Repository
-
-https://github.com/Heetbhuva704/IPL-Data-Analysis
-
 ---
 
 ## 📌 Overview
@@ -109,28 +105,7 @@ IPL-Data-Analysis/
 * Matplotlib, Seaborn
 * Scikit-learn (Gradient Boosting)
 
----
 
-## ▶️ How to Run
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/Heetbhuva704/IPL-Data-Analysis.git
-cd IPL-Data-Analysis
-```
-
-2. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the application:
-
-```bash
-python app.py
-```
 
 ---
 
@@ -140,22 +115,7 @@ python app.py
 * Model shows consistent results across both teams (no bias)
 * Feature importance highlights the significance of venue and match conditions
 
----
-## 📸 Screenshots
 
-### Dashboard
-![Dashboard](assets\IPL\Overview\download.png)
-
-### Prediction Output
-![Prediction](assets\IPL\Win Predictor\ca34354c-75bc-4e29-a0ec-c3f5eb45f397.png)
-
-### Sample Analysis
-![Analysis](assets\IPL\Team Analysis\b7ae03d0-530c-4378-ac40-67719521a653.png)
-
-## 📁 More Screenshots
-
-Additional screenshots are available in:
-👉 assets\IPL
 
 ## 🔮 Future Improvements
 
@@ -169,10 +129,3 @@ Additional screenshots are available in:
 ## 🎯 Conclusion
 
 This project combines **data analysis, visualization, and machine learning** to deliver a complete IPL analytics platform with both insights and predictive capabilities.
-
----
-
-## 👨‍💻 Author
-
-**Heet Bhuva**
-🔗 GitHub: https://github.com/Heetbhuva704
