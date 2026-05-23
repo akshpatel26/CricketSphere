@@ -229,43 +229,130 @@ def dark_fig(fig):
 # PAGE 1 – OVERVIEW
 # ══════════════════════════════════════════════════════════════════════════════
 if page == "🏠 Overview":
-    st.header(" 🏏 IPL Analytics Dashboard")
-    st.markdown(f"**Indian Premier League · {SEASONS[0]} – {SEASONS[-1]} · Complete Analysis**")
+
+    st.markdown("""
+    <style>
+    .main-title {
+        font-size: 40px;
+        font-weight: 800;
+        color: #ff4b4b;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .sub-title {
+        text-align: center;
+        color: #bbbbbb;
+        font-size: 18px;
+        margin-top: -10px;
+        margin-bottom: 25px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, #1f1f1f, #2b2b2b);
+        padding: 18px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .metric-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+    }
+
+    .metric-label {
+        font-size: 15px;
+        color: #cfcfcf;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # ================= TITLE =================
+    st.markdown(
+        f"""
+        <div class="main-title">🏏 IPL Analytics Dashboard</div>
+        <div class="sub-title">
+        Indian Premier League • {SEASONS[0]} – {SEASONS[-1]} • Complete Analysis
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("---")
 
-    # ── pre-compute innings totals for highest/lowest scores ──
+    # ================= CALCULATIONS =================
+
+    # Innings totals
     inn_totals = (
         d.groupby(["match_id", "inning", "batting_team"])["total_runs"]
         .sum()
         .reset_index()
     )
-    inn_totals = inn_totals.merge(
-        matches[["id", "season"]], left_on="match_id", right_on="id", how="left"
-    )
 
-    # Real IPL records (hardcoded)
-    hi_score = "287/3 (SRH, 2024)"
+    # Highest & Lowest score dynamically
+    highest = inn_totals.loc[inn_totals["total_runs"].idxmax()]
+    lowest = inn_totals.loc[inn_totals["total_runs"].idxmin()]
+
+    # Real IPL records (hardcoded) 
+    hi_score = "287/3 (SRH, 2024)" 
     lo_score = "49 (RCB, 2017)"
 
-    total_sixes = int(d[d["batsman_runs"] == 6]["batsman_runs"].count())
-    total_fours = int(d[d["batsman_runs"] == 4]["batsman_runs"].count())
+    total_matches = len(m)
+    total_seasons = m["season"].nunique()
+    total_teams = pd.unique(m[["team1", "team2"]].values.ravel()).shape[0]
 
-    # ── KPI Row 1 ──
-    c1, c2, c3, c4, c5 = st.columns(5)
-    c1.metric("Total Matches",  len(m))
-    c2.metric("Seasons",         m["season"].nunique())
-    c3.metric("Teams",           pd.unique(m[["team1","team2"]].values.ravel()).shape[0])
-    c4.metric("Total Runs",      f"{d['total_runs'].sum():,}")
-    c5.metric("Total Wickets",   f"{int(d['is_wicket'].sum()):,}")
+    total_runs = int(d["total_runs"].sum())
+    total_wickets = int(d["is_wicket"].sum())
 
-    st.markdown("")
+    total_sixes = int((d["batsman_runs"] == 6).sum())
+    total_fours = int((d["batsman_runs"] == 4).sum())
 
-    # ── KPI Row 2 ──
-    c6, c7, c8, c9 = st.columns(4)
-    c6.metric("Total Sixes",       f"{total_sixes:,}")
-    c7.metric("Total Fours",       f"{total_fours:,}")
-    c8.metric("Highest Team Score", hi_score)
-    c9.metric("Lowest Team Score",  lo_score)
+    # ================= KPI ROW 1 =================
+
+    cols1 = st.columns(5)
+
+    metrics1 = [
+        ("🏟️ Total Matches", f"{total_matches:,}"),
+        ("📅 Seasons", total_seasons),
+        ("👥 Teams", total_teams),
+        ("🏏 Total Runs", f"{total_runs:,}"),
+        ("🎯 Total Wickets", f"{total_wickets:,}")
+    ]
+
+    for col, (label, value) in zip(cols1, metrics1):
+        with col:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{value}</div>
+                <div class="metric-label">{label}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ================= KPI ROW 2 =================
+
+    cols2 = st.columns(4)
+
+    metrics2 = [
+        ("💥 Total Sixes", f"{total_sixes:,}"),
+        ("⚡ Total Fours", f"{total_fours:,}"),
+        ("🔥 Highest Team Score", hi_score),
+        ("🥶 Lowest Team Score", lo_score),
+    ]
+
+    for col, (label, value) in zip(cols2, metrics2):
+        with col:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{value}</div>
+                <div class="metric-label">{label}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
 
     st.markdown("---")
     col1, col2 = st.columns(2)
@@ -1441,10 +1528,7 @@ elif page == "🏆 Tournament Insights":
         st.dataframe(wdf.set_index("Season"), use_container_width=True)
 
         
-       
-
-
-# ══════════════════════════════════════════════════════════════════════════════
+  # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 5 – WIN PREDICTOR
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "🔮 Win Predictor":
