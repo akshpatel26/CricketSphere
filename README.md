@@ -2,11 +2,7 @@
 
 > An interactive multi-format cricket analytics dashboard built with **Streamlit**, covering IPL, T20 Internationals, ODIs, and Test cricket.
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.30%2B-red?logo=streamlit)
-![Plotly](https://img.shields.io/badge/Plotly-5.x-purple?logo=plotly)
-![License](https://img.shields.io/badge/License-MIT-green)
-
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?logo=streamlit)](https://cricketsphere-byakshpatel.streamlit.app/)
 ---
 
 ## ✨ Features
@@ -40,6 +36,21 @@
 - Dot ball analysis by bowler or team
 
 ---
+
+
+
+## 🔮 Win Predictor (IPL)
+
+The predictor uses a **Gradient Boosting Classifier** trained on historical IPL match data. Features include:
+
+- Team encodings
+- Toss winner & toss decision
+- Venue
+- Historical win percentages and head-to-head stats
+
+Model performance is displayed live in the app (Accuracy, Precision, Recall, F1-Score).
+
+--- 
 
 ## 🗂️ Project Structure
 
@@ -79,19 +90,6 @@ numpy>=1.24.0
 plotly>=5.18.0
 scikit-learn>=1.3.0
 ```
-
----
-
-## 🔮 Win Predictor (IPL)
-
-The predictor uses a **Gradient Boosting Classifier** trained on historical IPL match data. Features include:
-
-- Team encodings
-- Toss winner & toss decision
-- Venue
-- Historical win percentages and head-to-head stats
-
-Model performance is displayed live in the app (Accuracy, Precision, Recall, F1-Score).
 
 ---
 
