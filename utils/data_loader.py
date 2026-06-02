@@ -219,3 +219,39 @@ def compute_nrr(matches: pd.DataFrame, deliveries: pd.DataFrame, season: int = N
             "NRR": nrr_map.get(team, 0),
         })
     return pd.DataFrame(played_wins).sort_values(["Pts", "NRR"], ascending=False).reset_index(drop=True)
+
+
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# T20I loader – thin wrapper around t20_loader
+# ══════════════════════════════════════════════════════════════════════════════
+ 
+def load_t20() -> dict:
+    """
+    Load all T20 International data.
+ 
+    Returns a dict with keys:
+      matches, batting, bowling, fow, partnerships, players
+    Each value is a clean, standardised pandas DataFrame.
+ 
+    Example
+    -------
+    >>> from utils.data_loader import load_t20
+    >>> t20 = load_t20()
+    >>> t20["matches"].head()
+    """
+    try:
+        from utils.t20_loader import load_all_t20
+    except ModuleNotFoundError:
+        import importlib, pathlib
+        spec = importlib.util.spec_from_file_location(
+            "t20_loader",
+            pathlib.Path(__file__).parent / "t20_loader.py"
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        load_all_t20 = mod.load_all_t20
+ 
+    return load_all_t20()
+ 
