@@ -1,5 +1,4 @@
 """
-IPL Analytics Dashboard  –  Streamlit App
 Run:  streamlit run app.py
 """
 
@@ -53,7 +52,7 @@ from models.predictor import build_model, predict_winner
 
 # ── page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="IPL Analytics Dashboard",
+    page_title="CricketSphere",
     page_icon="🏏",
     layout="wide",
     initial_sidebar_state="expanded",
