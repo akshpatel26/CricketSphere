@@ -312,46 +312,74 @@ def analysis_wicket_takers(bowling: pd.DataFrame,
 # ══════════════════════════════════════════════════════════════════════════════
 # 4. Run scorers
 # ══════════════════════════════════════════════════════════════════════════════
-def analysis_run_scorers(batting: pd.DataFrame,
-                          players=None,
-                          top_n: int = 10,
-                          players_df=None) -> tuple:
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
+
+def analysis_run_scorers(
+    batting: pd.DataFrame,
+    players=None,
+    top_n: int = 10,
+    players_df=None,
+) -> tuple:
+
     players = _resolve_players(players, players_df)
 
     if batting.empty:
         return pd.DataFrame(), go.Figure()
 
-    # Column detect karo
+    # Detect batsman column
     name_col = None
     for c in ("batsman_name", "batsman_id", "batsman"):
         if c in batting.columns:
             name_col = c
             break
+
     if name_col is None:
         return pd.DataFrame(), go.Figure()
 
-    # ID hoy to name map karo
-    if (name_col in ("batsman_id", "batsman")
-            and players is not None
-            and not players.empty
-            and "player_id" in players.columns
-            and "player_name" in players.columns):
+    # Map player IDs to names
+    if (
+        name_col in ("batsman_id", "batsman")
+        and players is not None
+        and not players.empty
+        and "player_id" in players.columns
+        and "player_name" in players.columns
+    ):
         id_map = players.set_index("player_id")["player_name"].to_dict()
+
         batting = batting.copy()
         batting["batsman_display"] = (
-            batting[name_col].map(id_map).fillna(batting[name_col].astype(str))
+            batting[name_col]
+            .map(id_map)
+            .fillna(batting[name_col].astype(str))
         )
+
         name_col = "batsman_display"
 
-    # Aggregate
+    # Build aggregation dictionary
     agg_cols = {}
-    if "runs"     in batting.columns: agg_cols["runs"]    = ("runs",     "sum")
-    if "balls"    in batting.columns: agg_cols["balls"]   = ("balls",    "sum")
-    if "Match ID" in batting.columns: agg_cols["matches"] = ("Match ID", "nunique")
-    elif "match_id" in batting.columns: agg_cols["matches"] = ("match_id", "nunique")
-    if "sixes"    in batting.columns: agg_cols["sixes"]   = ("sixes",    "sum")
-    if "fours"    in batting.columns: agg_cols["fours"]   = ("fours",    "sum")
 
+    if "runs" in batting.columns:
+        agg_cols["runs"] = ("runs", "sum")
+
+    if "balls" in batting.columns:
+        agg_cols["balls"] = ("balls", "sum")
+
+    if "Match ID" in batting.columns:
+        agg_cols["matches"] = ("Match ID", "nunique")
+    elif "match_id" in batting.columns:
+        agg_cols["matches"] = ("match_id", "nunique")
+
+    if "sixes" in batting.columns:
+        agg_cols["sixes"] = ("sixes", "sum")
+
+    if "fours" in batting.columns:
+        agg_cols["fours"] = ("fours", "sum")
+
+    # Aggregate player stats
     df = (
         batting.groupby(name_col)
         .agg(**agg_cols)
@@ -359,14 +387,34 @@ def analysis_run_scorers(batting: pd.DataFrame,
         .rename(columns={name_col: "player_name"})
     )
 
-    # Strike rate calculate karo
+    # Convert numeric columns safely
+    for col in ["runs", "balls", "matches", "sixes", "fours"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # Strike Rate
     if "runs" in df.columns and "balls" in df.columns:
+
+        balls_nonzero = df["balls"].replace(0, np.nan)
+
         df["strike_rate"] = (
-            df["runs"] / df["balls"].replace(0, pd.NA) * 100
-        ).round(2)
+            (df["runs"] / balls_nonzero) * 100
+        )
 
-    df = df.sort_values("runs", ascending=False).head(top_n).reset_index(drop=True)
+        df["strike_rate"] = (
+            pd.to_numeric(df["strike_rate"], errors="coerce")
+            .round(2)
+        )
 
+    # Sort by runs
+    if "runs" in df.columns:
+        df = (
+            df.sort_values("runs", ascending=False)
+            .head(top_n)
+            .reset_index(drop=True)
+        )
+
+    # Plot
     fig = px.bar(
         df,
         x="runs",
@@ -374,21 +422,34 @@ def analysis_run_scorers(batting: pd.DataFrame,
         orientation="h",
         color="strike_rate" if "strike_rate" in df.columns else "runs",
         color_continuous_scale="Oranges",
-        labels={"runs": "Total Runs", "player_name": "Batsman", "strike_rate": "Strike Rate"},
+        labels={
+            "runs": "Total Runs",
+            "player_name": "Batsman",
+            "strike_rate": "Strike Rate",
+        },
         text="runs",
-        hover_data=[c for c in ["matches", "sixes", "fours", "strike_rate"] if c in df.columns],
+        hover_data=[
+            c
+            for c in ["matches", "sixes", "fours", "strike_rate"]
+            if c in df.columns
+        ],
     )
+
     fig.update_traces(textposition="outside")
+
     fig.update_layout(
         yaxis=dict(autorange="reversed"),
         coloraxis_showscale=True,
         template="plotly_dark",
         height=550,
-        title={"text": "🏏 Highest Run-Scorers in ODI Internationals",
-               "x": 0.5, "xanchor": "center"},
+        title={
+            "text": "🏏 Highest Run-Scorers in ODI Internationals",
+            "x": 0.5,
+            "xanchor": "center",
+        },
     )
-    return df, fig
 
+    return df, fig 
 # ══════════════════════════════════════════════════════════════════════════════
 # 5. Most sixes (by player) — ODI
 # ══════════════════════════════════════════════════════════════════════════════
