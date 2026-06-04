@@ -8,7 +8,7 @@ scikit-learn
 openpyxl
 Pillow
 requests
-
+streamlit-option-menu
 
 
 
