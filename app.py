@@ -234,50 +234,73 @@ team_stats = team_stats.sort_values("win_pct", ascending=False).reset_index(drop
 SEASONS = sorted(matches["season"].unique())
 TEAMS   = sorted(matches["team1"].dropna().unique())
 PLAYERS = sorted(set(bat_stats["player"].tolist() + bowl_stats["player"].tolist()))
+from streamlit_option_menu import option_menu
 
-# ── sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
+
     st.markdown("""
-    <div style="
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 0 5px 0;
-    ">
-        <div style="
-            background: linear-gradient(135deg, #f97316, #dc2626);
-            border-radius: 14px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(249,115,22,0.4);
-        ">🏏</div>
-        <div>
-            <div style="color: #ffffff; font-size: 18px; font-weight: 800; line-height: 1.1;">Cricket</div>
-            <div style="color: #f97316; font-size: 11px; font-weight: 500; letter-spacing: 1.5px;">ANALYTICS HUB</div>
-        </div>
+    <div style='text-align:center;padding-bottom:10px;'>
+        <h2>🏏 CricketSphere</h2>
+        <p style='color:#8b949e;font-size:12px;'>
+        Cricket Analytics Platform
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("---")
+    selected = option_menu(
+        menu_title="Navigation",
+        options=[
+    "🏏 IPL Analytics",
+    "⚡ T20I Analytics",
+    "🌍 ODI Analytics",
+    "🎩 Test Analytics"
+],
+        icons=[
+            "trophy-fill",
+            "lightning-fill",
+            "globe-central-south-asia",
+            "activity"
+        ],
+        menu_icon="bar-chart-fill",
+        default_index=0,
 
-    page = st.radio("", [
-        "🏏 IPL",
-        "⚡ T20 Rankings",
-        "🌏 ODI Rankings",
-        "🎩 Test Rankings",        
+        styles={
+            "container": {
+                "padding": "8px",
+                "background-color": "#161b22",
+                "border-radius": "12px",
+                "border": "1px solid #30363d",
+            },
 
-    ], label_visibility="collapsed")
+            "icon": {
+                "color": "#f97316",
+                "font-size": "18px"
+            },
 
-    st.markdown("---")
-    st.markdown("""
-<div style="font-size:12px;color:#cbd5e1;line-height:1.5;">
-Explore IPL, T20I, ODI, and Test cricket through interactive analytics and insights.
-</div>
-""", unsafe_allow_html=True)
+            "nav-link": {
+                "font-size": "15px",
+                "text-align": "left",
+                "margin": "4px 0",
+                "padding": "10px",
+                "border-radius": "10px",
+                "color": "#e6edf3",
+                "--hover-color": "#21262d",
+            },
+
+            "nav-link-selected": {
+                "background":
+                "linear-gradient(135deg,#f97316,#ef4444)",
+                "color": "white",
+                "font-weight": "600",
+            },
+
+            "menu-title": {
+                "font-size": "18px",
+                "font-weight": "700",
+                "color": "#ffffff",
+            }
+        }
+    )
 
 m = matches
 d = deliveries
@@ -299,7 +322,7 @@ def dark_fig(fig):
 # ══════════════════════════════════════════════════════════════════════════════
 # IPL PAGE
 # ══════════════════════════════════════════════════════════════════════════════
-if page == "🏏 IPL":
+if selected == "🏏 IPL Analytics":
     st.markdown("""
         <style>
         .main-title {
@@ -343,7 +366,7 @@ if page == "🏏 IPL":
         # ================= TITLE =================
     st.markdown(
             f"""
-            <div class="main-title">🏏 IPL Analytics Dashboard</div>
+            <div class="main-title"> IPL Analytics Dashboard</div>
             <div class="sub-title">
             Indian Premier League • {SEASONS[0]} – {SEASONS[-1]} • Complete Analysis
             </div>
@@ -389,11 +412,11 @@ if page == "🏏 IPL":
 """, unsafe_allow_html=True)
 
     ipl_tab1, ipl_tab2, ipl_tab3, ipl_tab4, ipl_tab5 = st.tabs([
-        "🏠 Overview",
-        "🏟 Team Analysis",
-        "👤 Player Analysis",
-        "🏆 Tournament Insights",
-        "🔮 Win Predictor",
+        " Overview",
+        " Team Analysis",
+        " Player Analysis",
+        " Tournament Insights",
+        " Win Predictor",
     ])
 
 
@@ -439,11 +462,11 @@ if page == "🏏 IPL":
         cols1 = st.columns(5)
     
         metrics1 = [
-            ("🏟️ Total Matches", f"{total_matches:,}"),
-            ("📅 Seasons", total_seasons),
-            ("👥 Teams", total_teams),
-            ("🏏 Total Runs", f"{total_runs:,}"),
-            ("🎯 Total Wickets", f"{total_wickets:,}")
+            (" Total Matches", f"{total_matches:,}"),
+            (" Seasons", total_seasons),
+            (" Teams", total_teams),
+            (" Total Runs", f"{total_runs:,}"),
+            (" Total Wickets", f"{total_wickets:,}")
         ]
     
         for col, (label, value) in zip(cols1, metrics1):
@@ -462,10 +485,10 @@ if page == "🏏 IPL":
         cols2 = st.columns(4)
     
         metrics2 = [
-            ("💥 Total Sixes", f"{total_sixes:,}"),
-            ("⚡ Total Fours", f"{total_fours:,}"),
-            ("🔥 Highest Team Score", hi_score),
-            ("🥶 Lowest Team Score", lo_score),
+            (" Total Sixes", f"{total_sixes:,}"),
+            (" Total Fours", f"{total_fours:,}"),
+            (" Highest Team Score", hi_score),
+            (" Lowest Team Score", lo_score),
         ]
     
         for col, (label, value) in zip(cols2, metrics2):
@@ -1119,7 +1142,7 @@ if page == "🏏 IPL":
 # ══    ════════════════════════════════════════════════════════════════════════════
     with ipl_tab3:
 
-        # st.header(" 👤 Player Analysis")
+        # st.header("  Player Analysis")
         st.markdown("""
 <style>
 /* ── Center tablist ── */
@@ -1164,7 +1187,7 @@ if page == "🏏 IPL":
 }
 </style>
 """, unsafe_allow_html=True)
-        tab1, tab2 = st.tabs(["🏏 Batsmen", "🎯 Bowlers"])
+        tab1, tab2 = st.tabs(["Batsmen", "Bowlers"])
     
         # ── BATSMEN ──
         with tab1:
@@ -1274,7 +1297,7 @@ if page == "🏏 IPL":
 # ══════════════════════════════════════════════════════════════════════════════
     with ipl_tab4:
 
-        # st.header("🏆 Tournament Insights")
+        # st.header(" Tournament Insights")
         st.markdown("""
     <style>
     /* ── Center tablist ── */
@@ -1319,7 +1342,7 @@ if page == "🏏 IPL":
     }
     </style>
     """, unsafe_allow_html=True)
-        tab1, tab2, tab3 = st.tabs(["🏅 Points Table","🏟 Venue","📅 Season Winners"])
+        tab1, tab2, tab3 = st.tabs(["Points Table","Venue","Season Winners"])
     
         # ── POINTS TABLE ──
         with tab1:
@@ -1724,13 +1747,13 @@ if page == "🏏 IPL":
 # ══════════════════════════════════════════════════════════════════════════════
 
  
-elif page =="⚡ T20 Rankings":
+elif selected == "⚡ T20I Analytics":
     st.markdown("""
         <style>
         .main-title {
             font-size: 40px;
             font-weight: 800;
-            color: #ff4b4b;
+            color: #7c3aed;
             text-align: center;
             margin-bottom: 0;
         }
@@ -1768,7 +1791,7 @@ elif page =="⚡ T20 Rankings":
         # ================= TITLE =================
     st.markdown(
             f"""
-            <div class="main-title">🏏 T20 International Rankings & Analysis</div>
+            <div class="main-title"> T20 International Rankings & Analysis</div>
             <div class="sub-title">
             T20 Cricket Matches • 2005 - 2024 • Complete Analysis
             </div>
@@ -1850,12 +1873,12 @@ elif page =="⚡ T20 Rankings":
     """, unsafe_allow_html=True)
     
     tabs = st.tabs([
-        "🌍 Countries & Venues",
-        "🎯 Wicket Takers",
-        "🏏 Run Scorers",
-        "💥 Sixes & Fours",
-        "🏆 Team Rankings",
-        "🚀 Advanced Insights",
+        "Countries & Venues",
+        "Wicket Takers",
+        "Run Scorers",
+        "Sixes & Fours",
+        "Team Rankings",
+        "Advanced Insights",
 
     ])
  
@@ -2145,10 +2168,10 @@ elif page =="⚡ T20 Rankings":
         # st.markdown("##  Advanced Analysis")
 
         subtabs = st.tabs([
-        "⚔️ Head-to-Head",
-        "🌡️ Ball Heatmap",
-        "⚔️ Matchups",
-        "📈 Seasonal Trends"
+        " Head-to-Head",
+        " Ball Heatmap",
+        " Matchups",
+        " Seasonal Trends"
     ])
 
         # ──────────────────────────────────────────────
@@ -2467,13 +2490,13 @@ elif page =="⚡ T20 Rankings":
 # OD  I Rankings page  —  fully fixed version
 # Paste this block into app.py where the ODI page was.
 # ─────────────────────────────────────────────────────────────────────────────
-elif page == "🌏 ODI Rankings":
+elif selected == "🌍 ODI Analytics":
     st.markdown("""
         <style>
         .main-title {
             font-size: 40px;
             font-weight: 800;
-            color: #ff4b4b;
+            color: #1565C0; 
             text-align: center;
             margin-bottom: 0;
         }
@@ -2511,7 +2534,7 @@ elif page == "🌏 ODI Rankings":
         # ================= TITLE =================
     st.markdown(
             f"""
-            <div class="main-title">🏏 ODI International Rankings & Analysis</div>
+            <div class="main-title">ODI International Rankings & Analysis</div>
             <div class="sub-title">
             ODI Cricket Matches • 1971 - 2024 • Complete Analysis
             </div>
@@ -2587,15 +2610,15 @@ elif page == "🌏 ODI Rankings":
 """, unsafe_allow_html=True)
  
     tabs = st.tabs([
-        "🌍 Countries & Venues",   
-        "🎯 Wicket Takers",
-        "🏏 Run Scorers",
-        "💥 Sixes & Fours",
-        "🏆 Team Rankings",
+        " Countries & Venues",   
+        " Wicket Takers",
+        " Run Scorers",
+        " Sixes & Fours",
+        " Team Rankings",
     ])
  
     with tabs[0]:
-        st.markdown("#### 🌍 Host Countries")
+        # st.markdown("####  Host Countries")
         df_host, fig_host = analysis_host_countries(odi_matches, top_n=10)
         st.plotly_chart(fig_host, use_container_width=True)
         # st.dataframe(df_host, use_container_width=True, hide_index=True)
@@ -2771,7 +2794,7 @@ elif page == "🌏 ODI Rankings":
 # ═══════════════════════════════════════════════════════════════════════════════
 # paste this INSIDE your  if page == "🎩 Test Rankings":  block in app.py
 # ═══════════════════════════════════════════════════════════════════════════════
-elif page == "🎩 Test Rankings":
+elif selected == "🎩 Test Analytics":
     from utils.test_loader   import load_all_test_data
     from utils.test_analysis import (
         get_matches_by_country, get_matches_by_venue,
@@ -2800,7 +2823,7 @@ elif page == "🎩 Test Rankings":
         .main-title {
             font-size: 40px;
             font-weight: 800;
-            color: #ff4b4b;
+            color: #00c853;
             text-align: center;
             margin-bottom: 0;
         }
@@ -2838,7 +2861,7 @@ elif page == "🎩 Test Rankings":
         # ================= TITLE =================
     st.markdown(
             f"""
-            <div class="main-title"> 🏏 Test Match Analytics</div>
+            <div class="main-title"> Test Match Analytics</div>
             <div class="sub-title">
             Test Cricket Matches • 1877 - 2024 • Complete Analysis
             </div>
@@ -2893,11 +2916,11 @@ elif page == "🎩 Test Rankings":
     </style>
     """, unsafe_allow_html=True)
     tabs = st.tabs([
-        "🌍 Countries & Venues",
-        "🎯 Wicket Takers",
-        "🏏 Run Scorers",
-        "🏆 Team Rankings",
-        "⚫ Dot Balls",
+        "Countries & Venues",
+        "Wicket Takers",
+        "Run Scorers",
+        "Team Rankings",
+        "Dot Balls",
     ])
 
     # ── Tab 1: Countries & Venues ─────────────────────────────────────────────
