@@ -11,7 +11,7 @@
 - **Overview** — Season-wise match counts, KPIs (runs, wickets, sixes, fours), toss analysis, IPL Champions wall (2008–2025)
 - **Team Analysis** — Season performance, H2H records, toss impact, rivalry insights for all 10 franchises
 - **Player Analysis** — Top 10 batsmen & bowlers (all-time), deep-dive metrics, season-wise run charts
-- **Tournament Insights** — Points tables (every season 2008–2025), venue stats, season winners with Orange/Purple Cap
+- **Tournament Insights** — Points tables (every season 2008–2025), venue stats, season winners with Orange/Purple Cap , Phase-wise Runs Analysis & Close Matches Analysis , The Toss: Luck, Strategy, and Outcome
 - **Win Predictor** — Gradient Boosting model with accuracy metrics, feature importance, and confusion matrix
 
 ### ⭐ T20 International
