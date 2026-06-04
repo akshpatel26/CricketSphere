@@ -41,7 +41,9 @@ def compute_team_form(matches: pd.DataFrame, window: int = 5) -> pd.DataFrame:
     Returns a DataFrame with columns:
         match_id | team1_form | team2_form
     """
-
+    matches = matches.copy()
+    matches.columns = matches.columns.str.strip()
+    
     # Sort by date so .tail(window) gives truly the last N matches
     df = matches.sort_values("date").copy()
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
@@ -94,6 +96,10 @@ def get_live_form(matches: pd.DataFrame, team: str, window: int = 5) -> float:
     N matches in the entire dataset (no date filter needed here,
     because we are predicting a future/upcoming match).
     """
+    matches = matches.copy()
+    matches.columns = matches.columns.str.strip()
+    
+    
     df = matches.sort_values("date")
     team_matches = df[
         (df["team1"] == team) | (df["team2"] == team)
@@ -113,7 +119,18 @@ def build_model(matches: pd.DataFrame):
     Features include: global win rate, venue win rate, H2H,
     toss info, AND current form (last 5 matches).
     """
-
+    # ── Fix column name whitespace ──
+    matches = matches.copy()
+    matches.columns = matches.columns.str.strip()
+     
+    # DEBUG - aa lines add karo
+    print("=== COLUMNS ===")
+    print(matches.columns.tolist())
+    print("=== WINNER SAMPLE ===")
+    print(matches['winner'].head(3) if 'winner' in matches.columns else "WINNER COLUMN NATHI!")
+    
+    df = matches.dropna(subset=["winner", "team1", "team2", "venue"]).copy()
+    
     # ── 1. Clean data ──────────────────────────────────────────────────────────
     df = matches.dropna(subset=["winner", "team1", "team2", "venue"]).copy()
     df = df[df.apply(lambda r: r["winner"] in [r["team1"], r["team2"]], axis=1)]
