@@ -4,7 +4,7 @@ Run:  streamlit run app.py
 
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-
+from streamlit_option_menu import option_menu
 import streamlit as st
 import pandas as pd
 import numpy as np
