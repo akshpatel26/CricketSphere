@@ -317,7 +317,7 @@ def render_ipl_tab(matches, deliveries, bat_stats, bowl_stats, team_stats, SEASO
             "Kolkata Knight Riders":       {"matches":253,"wins":131,"losses":116,"win_pct":53.0,"titles":3,"strength":"Spin & Middle-order Depth","color":"#9B59B6"},
             "Rajasthan Royals":            {"matches":221,"wins":112,"losses":104,"win_pct":51.8,"titles":1,"strength":"Smart Picks & Young Talent","color":"#254AA5"},
             "Sunrisers Hyderabad":         {"matches":185,"wins":94,"losses":87,"win_pct":51.2,"titles":1,"strength":"Bowling & Powerplay","color":"#FF822A"},
-            "Royal Challengers Bangalore": {"matches":274,"wins":129,"losses":137,"win_pct":47.1,"titles":1,"strength":"Star Power & Big Scores","color":"#EC1C24"},
+            "Royal Challengers Bangalore": {"matches":274,"wins":129,"losses":137,"win_pct":47.1,"titles":2,"strength":"Star Power & Big Scores","color":"#EC1C24"},
             "Delhi Capitals":              {"matches":242,"wins":106,"losses":133,"win_pct":43.8,"titles":0,"strength":"Youth & Aggressive Batting","color":"#00468B"},
             "Punjab Kings":                {"matches":263,"wins":119,"losses":139,"win_pct":45.2,"titles":0,"strength":"Explosive Openers","color":"#ED1F27"},
             "Gujarat Titans":              {"matches":62,"wins":38,"losses":23,"win_pct":62.3,"titles":1,"strength":"Balanced XI & Smart Captaincy","color":"#1C449B"},
