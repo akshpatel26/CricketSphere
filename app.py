@@ -489,7 +489,7 @@ elif selected == "⚡ T20I Analytics":
         st.divider()
     
         # ── Venue Analysis ────────────────────────────────────────────
-        st.markdown("#### 🏟️ Venue Analysis")
+        st.markdown("####  Venue Analysis")
         venue_df, _, _ = analysis_venue(t20_matches)
     
         if venue_df.empty:
@@ -502,7 +502,7 @@ elif selected == "⚡ T20I Analytics":
                 city    = f", {row['city']}"     if "city"    in venue_df.columns and pd.notna(row.get("city"))    else ""
                 venue_display.append(f"{row['venue']}{city}{country}")
     
-            selected_display = st.selectbox("Venue select karo", venue_display, key="venue_sel")
+            selected_display = st.selectbox("Venue select ", venue_display, key="venue_sel")
             selected = venue_df.iloc[venue_display.index(selected_display)]["venue"]
     
             _, vstats, figs = analysis_venue(t20_matches, selected_venue=selected)
